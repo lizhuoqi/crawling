@@ -73,9 +73,9 @@ func (ferret *Ferret) GetCompiled(key string) *Binary {
 	return &bin
 }
 
-func (ferret *Ferret) GetAllompiled() *(map[string]Binary) {
-	return &ferret.programs
-}
+// func (ferret *Ferret) GetAllompiled() *(map[string]Binary) {
+// 	return &ferret.programs
+// }
 
 func (ferret *Ferret) execute(job *Job) (result []byte, err error) {
 	fmt.Printf("Execute ferret query %s. %s. \n", job.Key, time.Now())

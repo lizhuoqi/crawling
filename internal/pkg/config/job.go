@@ -74,6 +74,7 @@ func ferretJobConfigs() {
 	fmt.Printf("Eventually, get %d jobs.\n", jobs.Len())
 }
 
+//////// helper ///////
 func walkThrough(root string) ([]string, error) {
 	var matches []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {

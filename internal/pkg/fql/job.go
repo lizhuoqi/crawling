@@ -1,7 +1,6 @@
 package fql
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -29,13 +28,18 @@ type Job struct {
 	}
 }
 
-func (job *Job) Run() (result []byte, err error) {
-	return GetFerret().ExecuteProgram(job)
-}
+// Not used yet.
+// func (job *Job) Run() (result []byte, err error) {
+// 	return GetFerret().ExecuteProgram(job)
+// }
 
-func (job *Job) RunAndSave() error {
-	return GetFerret().ExecuteProgramAndSaveOutput(job)
-}
+// func (job *Job) RunAndSave() error {
+// 	return GetFerret().ExecuteProgramAndSaveOutput(job)
+// }
+
+// func (job *Job) Compile() error {
+// 	return GetFerret().Compile(job)
+// }
 
 type JobRunner func(job *Job) (result []byte, err error)
 
@@ -53,10 +57,6 @@ func (job *Job) runnerMeasure(fun JobRunner) (result []byte, err error) {
 	return out, err
 }
 
-func (job *Job) Compile() error {
-	return GetFerret().Compile(job)
-}
-
 // you have to initialize the variable of type Jobs
 // e.g. `internal/pkg/config/job.go#init`
 type Jobs map[string]*Job
@@ -65,29 +65,31 @@ func (jobs Jobs) AddJob(job Job) {
 	jobs[job.Key] = &job
 }
 
-func (self Jobs) AddJobs(jobs []Job) {
-	for _, j := range jobs {
-		fmt.Println(j)
-		self[j.Key] = j
-	}
-}
 func (jobs Jobs) GetJob(name string) *Job {
 	return jobs[name]
 
 }
 
-func (jobs Jobs) GetJobs() []Job {
-	_jobs := make([]Job, 0)
-	for _, v := range jobs {
-		_jobs = append(_jobs, v)
-	}
-
-	return _jobs
-}
-
 func (jobs Jobs) Len() int {
 	return len(jobs)
 }
+
+// Not used yet
+//
+// func (self Jobs) AddJobs(jobs []Job) {
+// 	for _, j := range jobs {
+// 		self[j.Key] = &j
+// 	}
+// }
+//
+// func (jobs Jobs) GetJobs() []Job {
+// 	_jobs := make([]Job, 0)
+// 	for _, v := range jobs {
+// 		_jobs = append(_jobs, v)
+// 	}
+//
+// 	return _jobs
+// }
 
 ////// job state enum /////
 type JobState int8
