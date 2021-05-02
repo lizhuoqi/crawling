@@ -77,7 +77,7 @@ func (ferret *Ferret) GetAllompiled() *(map[string]Binary) {
 	return &ferret.programs
 }
 
-func (ferret *Ferret) ExecuteProgram(job *Job) (result []byte, err error) {
+func (ferret *Ferret) execute(job *Job) (result []byte, err error) {
 	fmt.Printf("Execute ferret query %s. %s. \n", job.Key, time.Now())
 	bin := ferret.programs[job.Key]
 	out, err := bin.Run(ferret.Context)
@@ -92,7 +92,11 @@ func (ferret *Ferret) ExecuteProgram(job *Job) (result []byte, err error) {
 
 func (ferret *Ferret) ExecuteProgramAndSaveOutput(job Job) error {
 	out, err := ferret.ExecuteProgram(&job)
+func (ferret *Ferret) ExecuteProgram(job *Job) (result []byte, err error) {
+	return job.runnerMeasure(ferret.execute, job)
+}
 
+	out, err := ferret.ExecuteProgram(job)
 	if err != nil {
 		return err
 	}

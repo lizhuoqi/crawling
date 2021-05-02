@@ -35,6 +35,21 @@ func (job *Job) Run() (result []byte, err error) {
 
 func (job *Job) RunAndSave() error {
 	return GetFerret().ExecuteProgramAndSaveOutput(*job)
+
+type JobRunner func(job *Job) (result []byte, err error)
+
+func (job *Job) runnerMeasure(fun JobRunner, arg *Job) (result []byte, err error) {
+	job.Stats.LastStart = time.Now()
+	out, err := fun(job)
+	job.Stats.LastStop = time.Now()
+	if err != nil {
+		job.Stats.LastState = Failed
+	} else {
+		// staticstic: only successful
+		job.Stats.Duration += job.Stats.LastStart.Sub(job.Stats.LastStop)
+		job.Stats.Times += 1
+	}
+	return out, err
 }
 
 func (job *Job) Compile() error {
