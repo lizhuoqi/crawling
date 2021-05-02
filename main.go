@@ -18,6 +18,7 @@ package main
 import (
 	"crawl/internal/pkg/config"
 	"crawl/internal/pkg/fql"
+	"crawl/internal/pkg/schedule"
 )
 
 func main() {
@@ -47,7 +48,7 @@ func getJobs() {
 		//  todo 结果再处理（保存，或重定向到文件）
 		// 经测试，在for循环中，当调用Do时，传入的函数名相同时，会被最后一个覆盖，
 		// 假设 for 循环10次，那么相当于最后一次所设置的Do函数，会被重复执行10次，这时可加上不同的参数来差异化
-		config.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)
+		schedule.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)
 	}
-	config.RunCron()
+	schedule.RunCron(int(config.GetConfig().Scheduler.Max))
 }

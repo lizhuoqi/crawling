@@ -1,4 +1,4 @@
-package config
+package schedule
 
 import (
 	"crawl/internal/pkg/fql"
@@ -12,7 +12,7 @@ var scheduler *gocron.Scheduler
 
 // cant set SingletonMode, SetMaxConcurrentJobs here
 // otherwise,  scheduler will hold
-func newScheduler() {
+func NewScheduler() {
 
 	scheduler = gocron.NewScheduler(time.UTC)
 	// sch.SingletonMode()
@@ -26,17 +26,16 @@ func GetScheduler() *gocron.Scheduler {
 }
 
 // start the cron loop and go back to main thread
-func RunCron() {
+func RunCron(concurrent int) {
 	fmt.Println("Start Cron Service.")
-	scheduler.SetMaxConcurrentJobs(int(GetConfig().Scheduler.Max), gocron.WaitMode)
+	scheduler.SetMaxConcurrentJobs(concurrent, gocron.WaitMode)
 	scheduler.StartAsync()
 }
 
 // start the cron loop and blocking the main thread
-func RunCronBlocking() {
-	fmt.Println("Start Cron Service.")
-	scheduler.SetMaxConcurrentJobs(int(GetConfig().Scheduler.Max), gocron.WaitMode)
-	scheduler.StartBlocking()
+func RunCronBlocking(concurrent int) {
+	RunCron(concurrent)
+	<-make(chan bool)
 }
 
 // schedule fql job

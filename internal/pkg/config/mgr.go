@@ -1,10 +1,13 @@
 package config
 
-import "fmt"
+import (
+	"crawl/internal/pkg/schedule"
+	"fmt"
+)
 
 func init() {
 	fmt.Println("Initialization...")
 	appConfig()
 	ferretJobConfigs()
-	newScheduler()
+	schedule.NewScheduler()
 }
