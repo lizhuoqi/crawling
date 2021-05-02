@@ -50,9 +50,16 @@ func getJobs() {
 	// 假设 for 循环10次，那么相当于最后一次所设置的Do函数，会被重复执行10次，这时可加上一个『值不同』的参数来差异化
 	// 这个值可以是数值，也可以是指针地址的值
 	for _, j := range *jobs {
-		// schedule.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)，make sure j is a value not a pointer.
 		// because gocron.Scheduler.Do in for-loop,
-		// jobFunc with Pointer-type params will be overwrited, until the last trip
+		// jobFunc (also with Pointer-type params is the same) will be overwrited, until the last trip
+		//
+		// In this loop, j is temporarily data copy, any change would lost,
+		// unless j is a pointer itself which scope is outside the for-loop.
+		//
+		// schedule.MakeSchedule().Do(ferret.ExecuteProgramAndSaveOutput, args)，
+		// make sure *args* is a value but not a temporary pointer,
+		// even value of pointer will work too.
+		//
 		schedule.MakeSchedule(j).Do(ferret.ExecuteProgramAndSaveOutput, j)
 	}
 	schedule.Start(int(config.GetConfig().Scheduler.Max))
