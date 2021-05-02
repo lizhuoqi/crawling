@@ -1,0 +1,9 @@
+jobsdir: configs/fql # default configDir/jobs
+fqldir: configs/fql # default configDir/fql 
+outdir: output # default current working directory
+fql:
+  # cache fql compiled programm in memory
+  cache: true # enable / disable
+scheduler:
+  # maximum fql crawling jobs running cocurrenly running
+  max: 4

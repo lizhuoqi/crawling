@@ -1,0 +1,13 @@
+fqljobs:
+  - name: zhihu/hotlist
+    desc: 知乎热榜
+    script: zhihu/hotlist.fql
+    enable: true # default true
+    schedule:
+      every: 3m
+  - name: zhihu/topsearch
+    desc: 知乎热搜
+    script: zhihu/topsearch.fql
+    enable: true # default true
+    schedule:
+      every: 4m

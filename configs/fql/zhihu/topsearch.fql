@@ -1,0 +1,18 @@
+// 知乎热搜
+let url = "https://www.zhihu.com/api/v4/search/top_search"
+let ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0"
+
+LET json = JSON_PARSE(IO::NET::HTTP::GET({
+    url,
+    headers: {
+        "User-Agent": ua
+    }
+}))
+
+let search_url = 'https://www.zhihu.com/search?type=content&q='
+
+for w in json.top_search.words
+    return {
+        title: w.display_query,
+        url: search_url + w.display_query
+    }
