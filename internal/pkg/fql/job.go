@@ -34,7 +34,8 @@ func (job *Job) Run() (result []byte, err error) {
 }
 
 func (job *Job) RunAndSave() error {
-	return GetFerret().ExecuteProgramAndSaveOutput(*job)
+	return GetFerret().ExecuteProgramAndSaveOutput(job)
+}
 
 type JobRunner func(job *Job) (result []byte, err error)
 

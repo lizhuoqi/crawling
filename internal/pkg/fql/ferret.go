@@ -90,12 +90,18 @@ func (ferret *Ferret) execute(job *Job) (result []byte, err error) {
 	}
 }
 
-func (ferret *Ferret) ExecuteProgramAndSaveOutput(job Job) error {
-	out, err := ferret.ExecuteProgram(&job)
+// outter caller like this will lost mearsure data.
+// ```go
+// for _, j := ranges jobs {
+//    ferret.ExecuteProgram(&j)
+// }
+// ```
+// because, j in for-loop is a temporarily data copy, any change would not be made to variable *jobs*.
 func (ferret *Ferret) ExecuteProgram(job *Job) (result []byte, err error) {
 	return job.runnerMeasure(ferret.execute, job)
 }
 
+func (ferret *Ferret) ExecuteProgramAndSaveOutput(job *Job) error {
 	out, err := ferret.ExecuteProgram(job)
 	if err != nil {
 		return err

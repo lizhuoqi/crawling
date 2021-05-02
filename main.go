@@ -43,12 +43,18 @@ func getJobs() {
 	// use ferret.ExecuteProgram(query key string) to run ferret query
 	ferret.CompileAll(config.GetFerretJobs())
 
-	// execute all ferret queriesß
+	// execute all ferret queries
+	//
+	// 经测试，在for循环中，当调用Do时，传入的jobFunc函数名相同时，会被最后一个覆盖，
+	// 假设 for 循环10次，那么相当于最后一次所设置的Do函数，会被重复执行10次，这时可加上一个『值不同』的参数来差异化
+	jobRunner := func(job fql.Job) {
+		ferret.ExecuteProgramAndSaveOutput(&job)
+	}
 	for _, j := range *config.GetFerretJobs() {
-		//  todo 结果再处理（保存，或重定向到文件）
-		// 经测试，在for循环中，当调用Do时，传入的函数名相同时，会被最后一个覆盖，
-		// 假设 for 循环10次，那么相当于最后一次所设置的Do函数，会被重复执行10次，这时可加上不同的参数来差异化
-		schedule.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)
+		// schedule.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)，make sure j is a value not a pointer.
+		// because gocron.Scheduler.Do in for-loop,
+		// jobFunc with Pointer-type params will be overwrited, until the last trip
+		schedule.MakeSchedule(&j).Do(jobRunner, j)
 	}
 	schedule.Start(int(config.GetConfig().Scheduler.Max))
 }
