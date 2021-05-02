@@ -39,7 +39,7 @@ func (job *Job) RunAndSave() error {
 
 type JobRunner func(job *Job) (result []byte, err error)
 
-func (job *Job) runnerMeasure(fun JobRunner, arg *Job) (result []byte, err error) {
+func (job *Job) runnerMeasure(fun JobRunner) (result []byte, err error) {
 	job.Stats.LastStart = time.Now()
 	out, err := fun(job)
 	job.Stats.LastStop = time.Now()
