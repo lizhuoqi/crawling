@@ -79,8 +79,7 @@ func (ferret *Ferret) GetAllompiled() *(map[string]Binary) {
 
 func (ferret *Ferret) execute(job *Job) (result []byte, err error) {
 	fmt.Printf("Execute ferret query %s. %s. \n", job.Key, time.Now())
-	bin := ferret.programs[job.Key]
-	out, err := bin.Run(ferret.Context)
+	out, err := ferret.GetCompiled(job.Key).Run(ferret.Context)
 
 	if err != nil {
 		fmt.Printf("fql script %s execute failed, %v.\n", job.Key, err)
