@@ -59,10 +59,10 @@ func (job *Job) Compile() error {
 
 // you have to initialize the variable of type Jobs
 // e.g. `internal/pkg/config/job.go#init`
-type Jobs map[string]Job
+type Jobs map[string]*Job
 
 func (jobs Jobs) AddJob(job Job) {
-	jobs[job.Key] = job
+	jobs[job.Key] = &job
 }
 
 func (self Jobs) AddJobs(jobs []Job) {
@@ -71,10 +71,9 @@ func (self Jobs) AddJobs(jobs []Job) {
 		self[j.Key] = j
 	}
 }
+func (jobs Jobs) GetJob(name string) *Job {
+	return jobs[name]
 
-func (jobs Jobs) GetJob(name string) Job {
-	job := jobs[name]
-	return job
 }
 
 func (jobs Jobs) GetJobs() []Job {

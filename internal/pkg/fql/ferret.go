@@ -64,7 +64,7 @@ func (ferret *Ferret) Compile(job *Job) error {
 
 func (ferret *Ferret) CompileAll(jobs *Jobs) {
 	for _, j := range *jobs {
-		ferret.Compile(&j)
+		ferret.Compile(j)
 	}
 }
 
