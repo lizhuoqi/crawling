@@ -1,6 +1,9 @@
 package fql
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Job struct {
 	Key    string
@@ -15,6 +18,14 @@ type Job struct {
 		Every string
 		At    string
 		Cron  string
+	}
+
+	Stats struct {
+		LastStart time.Time
+		LastStop  time.Time
+		Times     int // sucessful times
+		LastState JobState
+		Duration  time.Duration // total time spend
 	}
 }
 
@@ -61,4 +72,32 @@ func (jobs Jobs) GetJobs() []Job {
 
 func (jobs Jobs) Len() int {
 	return len(jobs)
+}
+
+////// job state enum /////
+type JobState int8
+
+const (
+	Running JobState = iota
+	Stopped
+	Pending
+	Terminated
+	Finished
+	Failed
+	Unknown
+)
+
+func (state JobState) String() string {
+	switch state {
+	case Running:
+		return "Running"
+	case Stopped:
+		return "Stopped"
+	case Finished:
+		return "Finished"
+	case Failed:
+		return "Failed"
+	default:
+		return "Unknown"
+	}
 }
