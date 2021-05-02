@@ -50,5 +50,5 @@ func getJobs() {
 		// 假设 for 循环10次，那么相当于最后一次所设置的Do函数，会被重复执行10次，这时可加上不同的参数来差异化
 		schedule.MakeSchedule(&j).Do(ferret.ExecuteProgramAndSaveOutput, j)
 	}
-	schedule.RunCron(int(config.GetConfig().Scheduler.Max))
+	schedule.Start(int(config.GetConfig().Scheduler.Max))
 }
