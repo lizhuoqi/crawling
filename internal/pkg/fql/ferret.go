@@ -80,14 +80,20 @@ func (ferret *Ferret) GetAllompiled() *(map[string]Binary) {
 func (ferret *Ferret) ExecuteProgram(job *Job) (result []byte, err error) {
 	fmt.Printf("Execute ferret query %s. %s. \n", job.Key, time.Now())
 	bin := ferret.programs[job.Key]
-	return bin.Run(ferret.Context)
+	out, err := bin.Run(ferret.Context)
+
+	if err != nil {
+		fmt.Printf("fql script %s execute failed, %v.\n", job.Key, err)
+		return nil, err
+	} else {
+		return out, nil
+	}
 }
 
 func (ferret *Ferret) ExecuteProgramAndSaveOutput(job Job) error {
 	out, err := ferret.ExecuteProgram(&job)
 
 	if err != nil {
-		fmt.Printf("fql script %s execute failed, %v.\n", job.Key, err)
 		return err
 	}
 
