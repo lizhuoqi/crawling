@@ -47,7 +47,7 @@ func (job *Job) runnerMeasure(fun JobRunner, arg *Job) (result []byte, err error
 		job.Stats.LastState = Failed
 	} else {
 		// staticstic: only successful
-		job.Stats.Duration += job.Stats.LastStart.Sub(job.Stats.LastStop)
+		job.Stats.Duration += job.Stats.LastStop.Sub(job.Stats.LastStart)
 		job.Stats.Times += 1
 	}
 	return out, err
