@@ -12,3 +12,15 @@ run:
 	./crawl
 
 dev: build run
+
+
+release:
+	
+	cd build && GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o ./crawl ..
+	cd build && tar -czf crawl.darwin-amd64.tar.gz ./crawl ./configs
+
+	cd build && GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o ./crawl ..
+	cd build && tar -czf crawl.linux-amd64.tar.gz ./crawl ./configs
+	
+	cd build && GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o ./crawl.exe ..
+	cd build && tar -czf crawl.windows-amd64.tar.gz ./crawl.exe ./configs

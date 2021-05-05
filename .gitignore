@@ -21,6 +21,7 @@
 # vendor/
 
 /remove
-/Output
+/output
 /docs
 crawl
+/build
