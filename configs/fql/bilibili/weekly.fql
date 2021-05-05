@@ -1,0 +1,35 @@
+// b站 每周必看
+let url = "https://api.bilibili.com/x/web-interface/popular/series/one"
+let ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0"
+let refer = "https://www.bilibili.com/"
+LET json = JSON_PARSE(IO::NET::HTTP::GET({
+    url,
+    headers: {
+        "User-Agent": ua,
+        "Referer": refer
+    }
+}))
+
+
+// data.list:
+//   - aid:
+//     bvid:
+//     title:  
+//     pic:   #封面
+//     short_link:
+//     stat:
+//         view: # 播放量
+//         danmaku:
+//     score:  # 综合得分
+for i in json.data.list
+    return {
+        cover: i.pic,
+        play: i.stat.view,
+        id: i.bvid,
+        title: i.title,
+        duration: i.duration,
+        url: i.short_link,
+        score: i.score,
+        reason: i.rcmd_reason,
+        pub: i.pubdate
+    }

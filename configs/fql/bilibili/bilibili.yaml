@@ -1,0 +1,31 @@
+# b站每周必看： 每周五18：00，一周一次
+# b站排行榜: 动态更新，不需要频繁更新，10~30分钟更新一次
+# b站综合热门：更新频繁，可1~10分钟抓取一次
+# b站入站必刷: 历史总榜，不需要频繁更新，一天一次
+fqljobs:
+  - name: bilibili/hot
+    script: bilibili/hot.fql
+    desc: b站 综合热门
+    enable: true
+    schedule:
+      every: 1m
+  - name: bilibili/ranking
+    script: bilibili/ranking.fql
+    desc: b站 排行榜
+    enable: true
+    schedule:
+      every: 11m
+  - name: bilibili/top
+    script: bilibili/top.fql
+    desc: b站 入站必刷，历史排行总榜
+    enable: true
+    schedule:
+      cron: "24 3 1,13 * * ?" # 每日01:03:24, 13:03:24 各一次
+  - name: bilibili/weekly
+    script: bilibili/weekly.fql
+    desc: b站 每周必看
+    enable: true
+    schedule:
+      cron: "* 3 18/1 * * 5 *" # 每周五18:00-23:00
+
+
