@@ -3,6 +3,7 @@ fqljobs:
     desc: 知乎热榜
     script: zhihu/hotlist.fql
     enable: true # default true
+    output: zhihu_hotlist.json
     schedule:
       every: 3m
   - name: zhihu/topsearch
