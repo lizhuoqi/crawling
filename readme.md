@@ -91,7 +91,8 @@ make sure that the program has been compiled, or download the executable.
 
 * Download
 
-todo download location
+[github.com/lizhuoqi/crawling/releases](https://github.com/lizhuoqi/crawling/releases) 
+[gitee.com/lizhuoqi/crawling/releases](https://gitee.com/lizhuoqi/crawling/releases)
 
 * Compile by yourself
 
