@@ -11,8 +11,17 @@ LET json = JSON_PARSE(IO::NET::HTTP::GET({
 
 let search_url = 'https://www.zhihu.com/search?type=content&q='
 
-for w in json.top_search.words
-    return {
-        title: w.display_query,
-        url: search_url + w.display_query
-    }
+
+
+let result = (
+    for w in json.top_search.words
+        return {
+            title: w.display_query,
+            url: search_url + w.display_query
+        }
+)
+
+return {
+    data: result,
+    lastmod: date_format(now(), "2006-01-02T15:04:05+08:00")
+}
