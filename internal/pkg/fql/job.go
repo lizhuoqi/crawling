@@ -13,11 +13,7 @@ type Job struct {
 	Output string
 	// Compiled bool
 	// binary
-	Schedule struct {
-		Every string
-		At    string
-		Cron  string
-	}
+	Schedule Schedule
 
 	Stats struct {
 		LastStart time.Time
@@ -26,6 +22,24 @@ type Job struct {
 		LastState JobState
 		Duration  time.Duration // total time spend
 	}
+}
+type Schedule struct {
+	Every string
+	At    string
+	Cron  string
+}
+
+func (s Schedule) String() string {
+	if s.Cron != "" {
+		return s.Cron
+	}
+	if s.Every != "" {
+		return s.Every
+	}
+	if s.At != "" {
+		return s.At
+	}
+	return ""
 }
 
 // Not used yet.

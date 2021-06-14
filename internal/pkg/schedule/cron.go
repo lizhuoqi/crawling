@@ -3,6 +3,7 @@ package schedule
 import (
 	"crawl/internal/pkg/fql"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/go-co-op/gocron"
@@ -59,6 +60,6 @@ func MakeSchedule(job *fql.Job) *gocron.Scheduler {
 	default:
 		s = GetScheduler().Every("7m")
 	}
-
+	log.Printf("fql job '%s(%s)' at schedule: %s", job.Name, job.Desc, job.Schedule)
 	return s.Tag(job.Key)
 }
