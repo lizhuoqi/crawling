@@ -54,20 +54,24 @@ func ferretJobConfigs() {
 		// turn to fql.job
 		// modify Job.Key, Job.Script
 		for _, j := range fromYaml.Fqljobs {
-			// make should Key is unqiue for every fql.Job
-			j.Key = key + "/" + j.Name
-			// relative/absolute realpath of the script file
-			j.Script = filepath.Join(fqldir, j.Script)
-			// relative/absolute path of output file
-			if len(j.Output) == 0 {
-				// use script file
-				j.Output = strings.Replace(j.Script, "/", "_", -1)
-				j.Output = strings.Replace(j.Output, "\\", "_", -1)
-				j.Output = j.Output[:len(j.Output)-len(filepath.Ext(j.Output))] + ".json"
+			// only deal with jobs of enable
+			if j.Enable {
+				// make should Key is unqiue for every fql.Job
+				j.Key = key + "/" + j.Name
+				// relative/absolute realpath of the script file
+				j.Script = filepath.Join(fqldir, j.Script)
+				// relative/absolute path of output file
+				if len(j.Output) == 0 {
+					// use script file
+					j.Output = strings.Replace(j.Script, "/", "_", -1)
+					j.Output = strings.Replace(j.Output, "\\", "_", -1)
+					j.Output = j.Output[:len(j.Output)-len(filepath.Ext(j.Output))] + ".json"
+				}
+				j.Output = filepath.Join(outdir, j.Output)
+
+				// save job
+				jobs.AddJob(j)
 			}
-			j.Output = filepath.Join(outdir, j.Output)
-			// save job
-			jobs.AddJob(j)
 		}
 	}
 
