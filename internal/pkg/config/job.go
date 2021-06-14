@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -69,6 +70,15 @@ func ferretJobConfigs() {
 				}
 				j.Output = filepath.Join(outdir, j.Output)
 
+				// make the `outdir` directory if not exists, and check
+				// mkdir
+				dir := filepath.Dir(j.Output)
+				name := filepath.Base(j.Output)
+				if err := os.Mkdir(dir, 0755); !(err == nil || os.IsExist(err)) {
+					log.Printf("Can't make directory %s, because %v", dir, err)
+					// fall back to crawl output dir
+					j.Output = filepath.Join(c.OutDir, name)
+				}
 				// save job
 				jobs.AddJob(j)
 			}
