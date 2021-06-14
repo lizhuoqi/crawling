@@ -1,5 +1,9 @@
 
-[说明-中文版本](https://youwu.today/blog/my-simple-crawling-tool/)
+<!-- [说明-中文版本](https://youwu.today/blog/my-simple-crawling-tool/) -->
+
+<p>
+  <a href="https://youwu.today/blog/my-simple-crawling-tool/">说明-中文版本</a>
+</p>
 
 ## Introduction
 

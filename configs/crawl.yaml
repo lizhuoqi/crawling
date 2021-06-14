@@ -1,4 +1,5 @@
 jobsdir: configs/fql # default configDir/jobs
+# jobsdir: configs/jobs # default configDir/jobs
 fqldir: configs/fql # default configDir/fql 
 outdir: output # default current working directory
 fql:
