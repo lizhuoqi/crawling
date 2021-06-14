@@ -7,25 +7,29 @@ fqljobs:
     script: bilibili/hot.fql
     desc: b站 综合热门
     enable: true
+    output: bilibili_hot.json
     schedule:
-      every: 1m
+      every: 73s
   - name: bilibili/ranking
     script: bilibili/ranking.fql
+    output: bilibili_ranking.json
     desc: b站 排行榜
     enable: true
     schedule:
       every: 11m
   - name: bilibili/top
     script: bilibili/top.fql
+    output: bilibili_top.json
     desc: b站 入站必刷，历史排行总榜
     enable: true
     schedule:
-      cron: "24 3 1,13 * * ?" # 每日01:03:24, 13:03:24 各一次
+      cron: "3 1/12 * * *" # 每12小时一次，1:03开始
   - name: bilibili/weekly
+    output: bilibili_weekly.json
     script: bilibili/weekly.fql
     desc: b站 每周必看
     enable: true
     schedule:
-      cron: "* 3 18/1 * * 5 *" # 每周五18:00-23:00
+      cron: "10 18/1 * * *" # 每周五18:10-23:10
 
 

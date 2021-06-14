@@ -1,14 +1,15 @@
 fqljobs:
-  - name: zhihu/hotlist
+  - name: zhihu/hot
     desc: 知乎热榜
-    script: zhihu/hotlist.fql
+    script: zhihu/hot.fql
     enable: true # default true
-    output: zhihu_hotlist.json
+    output: zhihu_hot.json
     schedule:
       every: 3m
   - name: zhihu/topsearch
     desc: 知乎热搜
     script: zhihu/topsearch.fql
+    output: zhihu_topsearch.json
     enable: true # default true
     schedule:
       every: 4m
