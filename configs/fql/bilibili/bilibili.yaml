@@ -2,6 +2,7 @@
 # b站排行榜: 动态更新，不需要频繁更新，10~30分钟更新一次
 # b站综合热门：更新频繁，可1~10分钟抓取一次
 # b站入站必刷: 历史总榜，不需要频繁更新，一天一次
+enable: true
 fqljobs:
   - name: bilibili/hot
     script: bilibili/hot.fql

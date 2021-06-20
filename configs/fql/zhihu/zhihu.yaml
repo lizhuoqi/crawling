@@ -1,3 +1,4 @@
+enable: true
 fqljobs:
   - name: zhihu/hot
     desc: 知乎热榜

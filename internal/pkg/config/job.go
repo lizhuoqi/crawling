@@ -39,6 +39,7 @@ func ferretJobConfigs() {
 
 	// use fql.Job for Unmarshalling
 	type jobsFromYaml struct {
+		Enable  bool
 		Fqljobs []fql.Job
 	}
 	// Get jobs in every yaml/json
@@ -52,6 +53,10 @@ func ferretJobConfigs() {
 		var fromYaml jobsFromYaml
 		jobviper.Unmarshal(&fromYaml)
 
+		// if all jobs all disable
+		if !fromYaml.Enable {
+			continue
+		}
 		// turn to fql.job
 		// modify Job.Key, Job.Script
 		for _, j := range fromYaml.Fqljobs {
